@@ -91,6 +91,35 @@ It's certainly a lot better and now we have a way to create as many people as we
 
 # A better approach - Constructor Functions
 
+Turns out, javascript has a way of doing this sort of behavior. It's called a constructor function.
+
+```
+function Person(name) {
+  this.name = name
+  this.greet = () => {
+    console.log(`hello, my name is ${this.name}`)
+  }
+}
+```
+
+Now we can create as many `Person` objects we'd like. We still have a slight problem in that we're creating a greet method for every instance of our object.
+
+In javascript all objects have a prototype. 
+
+
+
+function Person(name) {
+  this.name = name
+}
+
+Person.prototype.greet = () => {
+  console.log(`hello, my name is ${this.name}`)
+}
+```
+
+
+
+
 
 
 
