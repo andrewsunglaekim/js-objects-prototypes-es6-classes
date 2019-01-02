@@ -6,6 +6,7 @@
 - Create an object using a constructor function
 - Create a prototype for an object
 - Define methods on an object prototype
+- Identify some dangers of "monkey patching"
 - Differentiate between prototype methods and methods on the constructor
 - Create an es6 class
 - Create a constructor method for an es6 class
@@ -57,7 +58,7 @@ var person2 = {
 };
 ```
 
-## Discussion - 4m
+## Discussion - 3m
 
 - What are some issues with creating two "people" objects in this way?
 - What are some different approaches to writing the following code?
@@ -87,7 +88,7 @@ function createPerson(name){
 };
 ```
 
-It's certainly a lot better and now we have a way to create as many people as we want. But we have a issue where we create a `greet` method for every instance of a person. What if the partner wants greet to say something different? Now it needs to be changed in the `createPerson` function and then all the people need to be recreated.
+It's certainly a lot better and now we have a way to create as many people as we want. But we have a issue where we create a `greet` method for every instance of a person. What if the business partner wants greet to say something different? Now it needs to be changed in the `createPerson` function and then all the people need to be recreated.
 
 # A better approach - Constructor Functions
 
@@ -104,10 +105,10 @@ function Person(name) {
 
 Now we can create as many `Person` objects we'd like. We still have a slight problem in that we're creating a greet method for every instance of our object.
 
-In javascript all objects have a prototype. 
+In javascript all objects have a prototype.
 
 
-
+```
 function Person(name) {
   this.name = name
 }
@@ -117,14 +118,19 @@ Person.prototype.greet = () => {
 }
 ```
 
+MDN really says it best [here](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes):
+
+> Well, to be exact, the properties and methods are defined on the prototype property on Objects' constructor functions, not the object instances themselves. In JavaScript, a link is made between the object instance and its prototype (its __proto__ property, which is derived from the prototype property on the constructor), and the properties and methods are found by walking up the chain of prototypes.
 
 
+So something like this:
 
+```
+'bob'.__proto__
+```
 
+returns the `String` prototype
 
+## The monkey patch - And why we probably shouldn't do it.
 
-
-
-Well, to be exact, the properties and methods are defined on the prototype property on the Objects' constructor functions, not the object instances themselves.
-
-https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes
+In the above we were able to create a greet method for a `Person`'s prototype'
