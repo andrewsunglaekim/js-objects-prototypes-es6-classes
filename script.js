@@ -16,3 +16,24 @@ Developer.prototype.someDeveloperSpecificMethod = () => {
   console.log('hello');
   // some method that is specific to the Developer instances
 }
+
+class Person {
+  constructor(name) {
+    this.name = name
+  }
+
+  greet() {
+    console.log(`hello, my name is ${this.name}`)
+  }
+}
+
+class Developer {
+  constructor(name) {
+    super(name)
+    this.isCool = true;
+  }
+
+  someDeveloperSpecificMethod() {
+    console.log('hello');
+  }
+}
