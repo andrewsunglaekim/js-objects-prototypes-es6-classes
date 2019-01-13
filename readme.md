@@ -110,7 +110,9 @@ Sometimes, we as developers use tools like this and never really question why we
 
 But just like any method or function we use, it's specifically defined somewhere. The differences between the `greet` function we've written versus the `split` function defined natively is not too disparate apart from their functionalities.
 
-Turns out, javascript has given us a way of defining a type of object and methods for those objects. In order to even use a prototype we must first create a constructor function.  Think of it as a way to create object types in javascript. They are much like classes in other languages.
+## The constructor function
+
+Turns out, javascript has given us a way of defining a type of object and methods for those objects. In order to even use a prototype we must first create a constructor function.  Constructor functions allow us to create object types in javascript. They are much like classes in other languages.
 
 ```js
 function Person(name) {
@@ -119,11 +121,16 @@ function Person(name) {
     console.log(`hello, my name is ${this.name}`)
   }
 }
+
+// example of a new Person object
+const bob = new Person('bob');
 ```
+
+> It's important to note when using a function as a constructor function the `new` keyword must be used
 
 Now we can create as many `Person` objects we'd like. We still have a slight problem in that we're creating a greet method for every instance of our object. Instead let's leverage that prototype pattern and define a method on our `Person.prototype`
 
-
+## The prototype
 
 ```js
 function Person(name) {
@@ -142,8 +149,6 @@ const person = new Person('bob');
 person.greet();
 // displays 'hello, my name is bob'
 ```
-
-> It's important to note when using a function as a constructor function the `new` keyword must be used
 
 We can not only define methods for instances of our constructor, but we can also define methods on the constructor itself.
 
