@@ -30,7 +30,7 @@ The object literal is a versatile tool we can use to package some data together.
 
 Here's an example:
 
-```
+```js
 const person = {
   name: 'bob',
   greet: () => {
@@ -43,7 +43,7 @@ Neat, in just 6 lines of code We've got an object that not only has a property..
 
 Suppose we need to create two instances of the same type of object. We could do something like this:
 
-```
+```js
 const person = {
   name: 'bob',
   greet: () => {
@@ -69,11 +69,11 @@ There are lots of reason why me might want to define a type of object. Encapsula
 
 >The core idea in object-oriented programming is to divide programs into smaller pieces and make each piece responsible for managing its own state.
 
-# Another approach (4/14)
+# Another approach - A regular 'ol function(4/14)
 
 Going back to the `person1` and `person2` code. We could potentially write it like this.
 
-```
+```js
 function createPerson(name){
   return {
     name,
@@ -112,7 +112,7 @@ But just like any method or function we use, it's specifically defined somewhere
 
 Turns out, javascript has given us a way of defining a type of object and methods for those objects. In order to even use a prototype we must first create a constructor function.  Think of it as a way to create object types in javascript. They are much like classes in other languages.
 
-```
+```js
 function Person(name) {
   this.name = name
   this.greet = () => {
@@ -125,7 +125,7 @@ Now we can create as many `Person` objects we'd like. We still have a slight pro
 
 
 
-```
+```js
 function Person(name) {
   this.name = name
 }
@@ -196,7 +196,7 @@ When accessing a property on an object `someObject.someProp` it will
 
 Even though there are "classes" with es6. It should be noted that this is merely syntactic sugar that sits on top of the inheritance chain. Here's how the above `Person` and `Developer` code looks in an es6 class:
 
-```
+```js
 class Person {
   constructor(name) {
     this.name = name
