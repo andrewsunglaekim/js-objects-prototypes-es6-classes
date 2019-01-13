@@ -59,7 +59,7 @@ const person2 = {
 };
 ```
 
-## Discussion - (6/9)
+## Discussion - (3/9)
 
 - What are some issues with creating two "people" objects in this way?
 - What are some different approaches to writing the previous code?
@@ -137,15 +137,17 @@ Person.prototype.greet = () => {
 
 Now every instance of our `Person` constructor has access to a `greet` mmethod.
 
-```
+```js
 const person = new Person('bob');
 person.greet();
 // displays 'hello, my name is bob'
 ```
 
+> It's important to note when using a function as a constructor function the `new` keyword must be used
+
 We can not only define methods for instances of our constructor, but we can also define methods on the constructor itself.
 
-```
+```js
 function Person(name) {
   this.name = name
 }
