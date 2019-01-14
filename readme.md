@@ -6,7 +6,6 @@
 - Create an object using a constructor function
 - Create a prototype for an object
 - Define methods on an object prototype
-- Identify some dangers of "monkey patching"
 - Differentiate between prototype methods and methods on the constructor
 - Inherit prototypes
 - Create an es6 class
