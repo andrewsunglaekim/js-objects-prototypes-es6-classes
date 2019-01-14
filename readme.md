@@ -263,7 +263,11 @@ No matter the group, this list is always varied greatly. All sorts of things are
 
 ## Starting a charting library
 
-It's nice to learn the syntax of object oriented practices through objects like `Person` and `Developer`, but as developers, they are a bit contrived and lack any kind of utility that we work in on a day to day basis. In the following demo we'll be building the start to a charting library in vanilla JS.
+It's nice to learn the syntax of object oriented practices through objects like `Person` and `Developer`, but as developers, they are a bit contrived and lack any kind of utility that we work in on a day to day basis.
+
+Instead of encapsulating properties like name, what if our properties we're dom elements? What if instead of `greet` method we had a `render` method instead. This is just one small example of things you can encapsulate. Just like in the group activity above, there are lots of different reasons to model something in a type or class.
+
+In the following demo we'll be building the start to a charting library in vanilla JS.
 
 We'll be using es6 here. The es6 syntax for classes is syntactic sugar, the following code can be written in es5 as well.
 
