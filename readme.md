@@ -403,7 +403,11 @@ class ScatterPlotChart {
 
 Nothing too special going on here. The chart constructor here creates an elements sets its styles based on its properties and then append points with some configuration. We're not sure what `Point`'s are quite yet, but we'll see what they are shortly.
 
-In this class we've encapsulated properties and methods that are pertinent to the over arching chart. Things like its height and width, its overall data set and various other things.
+In this class we've:
+
+- encapsulated properties and methods that are pertinent to the over arching chart. Things like its height and width, its overall data set and various other things.
+- create a dom element and assign it to our instance
+- adds some methods to get some aggregated values and set some styles.
 
 We've abstracted out each individual point from this class because we want each point to manage their own state. To do this, we pass anything the point needs to be aware of to the point constructor.
 
@@ -459,6 +463,8 @@ class ScatterPlotChartPoint {
 }
 ```
 
+In this class, we're doing much of the same as the last. However, instead of encapsulating behaviors and properties for the chart, we're encapsulating behaviors and properties for the points on the chart.
+
 The fanciest thing here is a little bit of math used to calculate where to move the points with css.
 
 Finally, The file that starts everything up `./script.js`:
@@ -476,6 +482,8 @@ const scatterChart = new ScatterPlotChart({
 const mainEl = document.querySelector('.app__main');
 mainEl.appendChild(scatterChart.el)
 ```
+
+In this file we simply create a new instance of a `ScatterPlotChart` and pass in the necessary data. Then we just append the `el` property of the instance of `ScatterPlotChart` to the html.
 
 ## You Do - A Bar chart
 
