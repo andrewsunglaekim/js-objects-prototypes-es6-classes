@@ -252,7 +252,7 @@ class Developer extends Person {
 
 > Note that the `constructor` is a reserved word in a JS class. It acts much the same as the Constructor functions we defined in es5.
 
-> Additionally, in es6, methods on the construcutor are defined as static methods within classes
+> Additionally, in es6, methods on the constructor are defined as static methods within classes using the `static` keyword
 
 ## Group Activity - A use case (remainder)
 
