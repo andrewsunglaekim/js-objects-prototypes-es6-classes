@@ -219,8 +219,6 @@ When accessing a property on an object `someObject.someProp` it will
 - If not, checks if the prototype of that prototype has a property `someProp`, and on and on.
 
 
-```
-
 ## Classes (5/45)
 
 Even though there are "classes" with es6. It should be noted that this is merely syntactic sugar that sits on top of the inheritance chain. Here's how the above `Person` and `Developer` code looks in an es6 class:
