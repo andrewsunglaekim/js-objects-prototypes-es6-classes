@@ -454,7 +454,7 @@ The fanciest thing here is a little bit of math used to calculate where to move 
 Finally, The file that starts everything up `./script.js`:
 
 ```js
-var data = [1, 14, 8, 12, 3];
+const data = [1, 14, 8, 12, 3];
 
 const scatterChart = new ScatterPlotChart({
   height: 100,
