@@ -327,7 +327,7 @@ Nothing fancy just some base styles we'll need for the scatter plots.
 In the html above we require 3 script files
 
 
-```js
+```html
 <script src="./ScatterPlotChart.js"></script>
 <script src="./ScatterPlotChartPoint.js"></script>
 <script src="./script.js"></script>
