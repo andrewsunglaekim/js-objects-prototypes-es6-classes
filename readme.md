@@ -403,7 +403,11 @@ class ScatterPlotChart {
 
 Nothing too special going on here. The chart constructor here creates an elements sets its styles based on its properties and then append points with some configuration. We're not sure what `Point`'s are quite yet, but we'll see what they are shortly.
 
-Let's take a look at `./ScatterPlotChartPoint.js`:
+In this class we've encapsulated properties and methods that are pertinent to the over arching chart. Things like its height and width, its overall data set and various other things.
+
+We've abstracted out each individual point from this class because we want each point to manage their own state. To do this, we pass anything the point needs to be aware of to the point constructor.
+
+Now let's take a look at `./ScatterPlotChartPoint.js` to see how points have been encapsulated:
 
 ```js
 class ScatterPlotChartPoint {
