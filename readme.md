@@ -133,10 +133,12 @@ Now we can create as many `Person` objects we'd like. We still have a slight pro
 ## The prototype
 
 ```js
+// constructor
 function Person(name) {
   this.name = name
 }
 
+// prototype
 Person.prototype.greet = () => {
   console.log(`hello, my name is ${this.name}`)
 }
@@ -153,14 +155,17 @@ person.greet();
 We can not only define methods for instances of our constructor, but we can also define methods on the constructor itself.
 
 ```js
+// constuctor
 function Person(name) {
   this.name = name
 }
 
+// instance method
 Person.prototype.greet = () => {
   console.log(`hello, my name is ${this.name}`)
 }
 
+// method on the constructor
 Person.someMethodOnTheConstructor = () => {
   console.log('I\'m a method on the constructor');
 }
@@ -173,29 +178,48 @@ Defining things on the constructor is a way to encapsulate behavior about a whol
 Prototypes can inherit other prototypes very simply. Say we wanted to make a `Developer` constructor and prototype. We could leverage our existing `Person` code in this way:
 
 ```js
+// Person constuctor (parent)
+function Person(name) {
+  this.name = name
+}
+
+// instance method
+Person.prototype.greet = () => {
+  console.log(`hello, my name is ${this.name}`)
+}
+
+// Developer constructor
 function Developer(name) {
+  // Parent class constructor called for initialization
   Person.call(this, name);
+  // Developer specific property assigned
   this.isCool = true;
 }
 
+// Inherits Person prototype
 Developer.prototype = new Person();
 
+// some method that is specific to the Developer instances
 Developer.prototype.someDeveloperSpecificMethod = () => {
-  console.log('hello');
-  // some method that is specific to the Developer instances
+  console.log('I\' a developer');
 }
 ```
 
-In the above example we use [`call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) to ... call the parent constructor. Then we set the prototype to be an instance of our Parent prototype.
+In the above example we use [`call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) to ... call the parent constructor. The first argument is the context `this`(in this case, the instance of the `Developer` object being created). The second argument is what will be passed to the parent constructor. Then we set the prototype to be an instance of our Parent prototype.
 
 ## The prototype lookup (5/40)
 
-The [MDN docs] are unusually terse regarding inheritance in js. However their closing remarks on inheritance boil it down into a prototype lookup.
+The syntax of the inheritance is quite simple. It helps formulate how the prototype works.
+
+The [MDN docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) are unusually terse regarding inheritance in js. However their closing remarks on inheritance boil it down into a prototype lookup.
 
 When accessing a property on an object `someObject.someProp` it will
 - first look if `someObject` has a property `someProp`
 - If not, checks if the prototype has a property `someProp`
 - If not, checks if the prototype of that prototype has a property `someProp`, and on and on.
+
+
+```
 
 ## Classes (5/45)
 
@@ -224,10 +248,227 @@ class Developer extends Person {
 }
 ```
 
-## Group Activity - A cool use case (remainder)
+> Note that the `constructor` is a reserved word in a JS class. It acts much the same as the Constructor functions we defined in es5.
+
+## Group Activity - A use case (remainder)
 
 The past code snippets we're the standard run of the mill object types that you would see within academia.
 
 As a group let's list out at least 10 types of objects we've used in our collective careers.
 
-No matter the group, this list can vary greatly. All sorts of things are encapsulated into objects with regard to programming. The following code along will help us leverage some oop practices in ui development.  
+No matter the group, this list is always varied greatly. All sorts of things are encapsulated into objects with regard to programming. The following code along will help us leverage some oop practices in ui development.  
+
+## Starting a charting library
+
+It's nice to learn the syntax of object oriented practices through objects like `Person` and `Developer`, but as developers, they are a bit contrived and lack any kind of utility that we work in on a day to day basis. In the following demo we'll be building the start to a charting library in vanilla JS.
+
+We'll be using es6 here. The es6 syntax for classes is syntactic sugar, the following code can be written in es5 as well.
+
+Given this data:
+
+```js
+const data = [1, 14, 8 , 12, 3];
+```
+
+We want to create a scatter plot that looks something like this:
+
+![scatter graph](scatter.png)
+
+We'll start with this HTML:
+
+```html
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Start Chart</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body class="app">
+    <h1>Start Chart</h1>
+    <div class="app__main">
+
+    </div>
+    <script src="./ScatterPlotChart.js"></script>
+    <script src="./ScatterPlotChartPoint.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
+```
+
+And this css `./styles.css`:
+
+```css
+.app {
+  text-align: center;
+}
+
+.scatter-plot-chart {
+  margin: auto;
+  margin-top: 100px;
+  position: relative;
+}
+
+.scatter-plot-chart__point {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+  border-radius: 50%;
+  bottom: 0;
+  left: 0;
+  background: #ccc;
+  color: #eee;
+}
+```
+
+Nothing fancy just some base styles we'll need for the scatter plots.
+
+In the html above we require 3 script files
+
+
+```js
+<script src="./ScatterPlotChart.js"></script>
+<script src="./ScatterPlotChartPoint.js"></script>
+<script src="./script.js"></script>
+```
+
+Let's look at `ScatterPlotChart` first:
+
+```js
+class ScatterPlotChart {
+  // constructor function for our ScatterPlotChart class
+  constructor({ height, width, suffix, data }) {
+    // deconstructs object data to set its properties
+    this.height = height;
+    this.width = width;
+    this.suffix = suffix;
+    this.data = data;
+    this.createEl();
+    this.setStyles();
+    this.appendPoints();
+  }
+
+  // creates the dom element for the scatter plot
+  createEl() {
+    this.el = document.createElement('div');
+    this.el.className = 'scatter-plot-chart';
+  }
+
+  // sets height and width of chart
+  setStyles() {
+    this.el.style.width = `${this.width}${this.suffix}`
+    this.el.style.height = `${this.height}${this.suffix}`
+  }
+
+  // appends the scatter point
+  appendPoints() {
+    this.data.forEach((dataPoint, i) => {
+      // for each value in the array, we'll create a new ScatterPlotChartPoint with the following argument
+      const scatterPlotChartPoint = new ScatterPlotChartPoint({
+        // the value of the element interated over
+        value: dataPoint,
+        // the index to know the order
+        index: i,
+        // the charts overall height
+        chartHeight: this.height,
+        // the charts overall width
+        chartWidth: this.width,
+        // the measurement suffix for css
+        suffix: this.suffix,
+        // the rangeX of the data in reference to number of elements
+        rangeX: this.data.length,
+        // the rangeY of the data in reference to highest and lowest values of hte data
+        rangeY: this.getRangeY(),
+      });
+      // appends each chart point to the chart
+      this.el.appendChild(scatterPlotChartPoint.el);
+    })
+  }
+
+  // gets the range of Y axis
+  getRangeY() {
+    const min = Math.min(...this.data);
+    const max = Math.max(...this.data);
+    return max - min;
+  }
+}
+```
+
+Nothing too special going on here. The chart constructor here creates an elements sets its styles based on its properties and then append points with some configuration. We're not sure what `Point`'s are quite yet, but we'll see what they are shortly.
+
+Let's take a look at `./ScatterPlotChartPoint.js`:
+
+```js
+class ScatterPlotChartPoint {
+  // constructor function for our ScatterPlotChart class
+  // uses values
+  constructor({ value, index, chartHeight, chartWidth, suffix, rangeX, rangeY }) {
+    // deconstructs properties from the argument and sets values
+    this.value = value
+    this.index = index;
+    this.chartHeight = chartHeight;
+    this.chartWidth = chartWidth;
+    this.suffix = suffix;
+    this.rangeX = rangeX;
+    this.rangeY = rangeY;
+    // configures height and width of the point
+    this.height = 25;
+    this.width = 25;
+    this.createEl();
+    this.setStyles();
+  }
+
+  // creates the point element
+  createEl() {
+    this.el = document.createElement('div');
+    this.el.innerHTML = this.value;
+    this.el.className = 'scatter-plot-chart__point';
+  }
+
+  // sets the styles of the element
+  setStyles() {
+    const transformValue = `translate(${this.getTranslateX()}, ${this.getTranslateY()})`
+    this.el.style.transform = transformValue;
+    this.el.style.height = `${this.height}px`
+    this.el.style.width = `${this.width}px`
+  }
+
+  // gets value for how much point gets moved along x-axis
+  getTranslateX() {
+    const translateX = this.chartWidth * this.index / this.rangeX;
+    const midwayIncrement = this.chartWidth / this.rangeX / 2
+    return `${translateX + midwayIncrement - (this.width / 2)}${this.suffix}`;
+  }
+
+  // gets value for how much the point gets moved along the y-axis
+  getTranslateY() {
+    const translateY = this.chartHeight * this.value / this.rangeY;
+    return `-${translateY}${this.suffix}`;
+  }
+}
+```
+
+The fanciest thing here is a little bit of math used to calculate where to move the points with css.
+
+Finally, The file that starts everything up `./script.js`:
+
+```js
+var data = [1, 14, 8, 12, 3];
+
+const scatterChart = new ScatterPlotChart({
+  height: 100,
+  width: 500,
+  suffix: 'px',
+  data,
+})
+
+const mainEl = document.querySelector('.app__main');
+mainEl.appendChild(scatterChart.el)
+```
+
+## You Do - A Bar chart
+
+Follow the directions in [this repo](https://github.com/andrewsunglaekim/start-chart-ex/tree/master) to create a solution for a bar chart
