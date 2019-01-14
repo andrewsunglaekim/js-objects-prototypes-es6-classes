@@ -144,7 +144,7 @@ Person.prototype.greet = () => {
 }
 ```
 
-Now every instance of our `Person` constructor has access to a `greet` mmethod.
+Now every instance of our `Person` constructor has access to a `greet` method.
 
 ```js
 const person = new Person('bob');
@@ -243,10 +243,16 @@ class Developer extends Person {
   someDeveloperSpecificMethod() {
     console.log('hello');
   }
+
+  static someMethodOnTheConstructor() {
+    console.log('I\'m a method on the constructor');
+  }
 }
 ```
 
 > Note that the `constructor` is a reserved word in a JS class. It acts much the same as the Constructor functions we defined in es5.
+
+> Additionally, in es6, methods on the construcutor are defined as static methods within classes
 
 ## Group Activity - A use case (remainder)
 

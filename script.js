@@ -27,7 +27,7 @@ class Person {
   }
 }
 
-class Developer {
+class Developer extends Person {
   constructor(name) {
     super(name)
     this.isCool = true;
