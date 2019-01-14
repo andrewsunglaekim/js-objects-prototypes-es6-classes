@@ -209,14 +209,14 @@ In the above example we use [`call`](https://developer.mozilla.org/en-US/docs/We
 
 ## The prototype lookup (5/40)
 
-The syntax of the inheritance is quite simple. It helps formulate how the prototype works.
+The syntax of the inheritance is quite simple. Additionally, It helps formulate how the prototype chain works.
 
 The [MDN docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) are unusually terse regarding inheritance in js. However their closing remarks on inheritance boil it down into a prototype lookup.
 
 When accessing a property on an object `someObject.someProp` it will
 - first look if `someObject` has a property `someProp`
 - If not, checks if the prototype has a property `someProp`
-- If not, checks if the prototype of that prototype has a property `someProp`, and on and on.
+- If not, checks if the prototype of that prototype has a property `someProp`, and on and on until the prototype is `null`. Null's prototype is undefined.
 
 
 ## Classes (5/45)
